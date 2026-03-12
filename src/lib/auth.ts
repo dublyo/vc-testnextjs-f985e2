@@ -2,6 +2,7 @@ import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from './prisma'
 import bcrypt from 'bcryptjs'
+import { config } from './config'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -30,14 +31,9 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        try {
-          const isValid = await bcrypt.compare(credentials.password, user.password)
+        const isValid = await bcrypt.compare(credentials.password, user.password)
 
-          if (!isValid) {
-            return null
-          }
-        } catch (error) {
-          console.error('bcrypt comparison error:', error)
+        if (!isValid) {
           return null
         }
 
@@ -66,5 +62,5 @@ export const authOptions: NextAuthOptions = {
       return token
     },
   },
-  secret: process.env.AUTH_SECRET,
+  secret: config.authSecret,
 }
