@@ -30,9 +30,14 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password)
+        try {
+          const isValid = await bcrypt.compare(credentials.password, user.password)
 
-        if (!isValid) {
+          if (!isValid) {
+            return null
+          }
+        } catch (error) {
+          console.error('bcrypt comparison error:', error)
           return null
         }
 
