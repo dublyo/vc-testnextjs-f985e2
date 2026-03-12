@@ -3,6 +3,8 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Rocket, Zap, Shield, Database, CreditCard, Mail } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 /** Feature items displayed in the grid on the homepage */
 const features = [
   {
